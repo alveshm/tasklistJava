@@ -15,7 +15,7 @@ public class Task {
     private int id;
     private String nome;
     private String descricao;
-    private Date dataInicio;
+    private String dataInicio;
     private String status;
 
     public String getStatus() {
@@ -50,11 +50,11 @@ public class Task {
         this.descricao = descricao;
     }
 
-    public Date getDataInicio() {
+    public String getDataInicio() {
         return dataInicio;
     }
 
-    public void setDataInicio(Date dataInicio) {
+    public void setDataInicio(String dataInicio) {
         this.dataInicio = dataInicio;
     }
     

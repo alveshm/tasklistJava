@@ -12,23 +12,33 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>TaskList - Teste</title>
         <link rel="stylesheet" href="<c:url value="resources/css/bootstrap.min.css" />" type="text/css"/>
+         <link rel="stylesheet" href="<c:url value="resources/css/style.css" />" type="text/css"/>
     </head>
 
     <body>
         <div class="container">
             <h2>TaskList</h2>
-            <form name="task" method="POST" action="editTask?id=<%= request.getAttribute("id") %>">
-                <input type="hidden" name="id" value="<%= request.getAttribute("id") %>">
-                <div class="form-group">
-                    <label for="nome">Nome</label>
-                    <input type="text" class="form-control" name="nome" value="<%= request.getAttribute("nome") %>" placeholder="Digite o nome da Task">
+            <div class="card text-center">
+                <div class="card-header">
+                  Editar Tarefa
                 </div>
-                <div class="form-group">
-                    <label for="descricao">Descrição</label>
-                    <textarea type="text" class="form-control" name="descricao" placeholder="Escreva uma descrição" rows="3"><%= request.getAttribute("descricao") %></textarea>
+                <div class="card-body">
+                  <form name="task" method="POST" action="editTask?id=<%= request.getAttribute("id") %>">
+                        <input type="hidden" name="id" value="<%= request.getAttribute("id") %>">
+                        <div class="form-group">
+                            <label for="nome">Nome</label>
+                            <input type="text" class="form-control" name="nome" value="<%= request.getAttribute("nome") %>" placeholder="Digite o nome da Task">
+                        </div>
+                        <div class="form-group">
+                            <label for="descricao">Descrição</label>
+                            <textarea type="text" class="form-control" name="descricao" placeholder="Escreva uma descrição" rows="3"><%= request.getAttribute("descricao") %></textarea>
+                        </div>
+                        <div class="btSave">
+                            <button type="submit" class="btn btn-primary">Atualizar</button>
+                        </div>
+                    </form>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+              </div>
         </div>
         
     </body>

@@ -20,13 +20,13 @@ public class TaskDAO {
     private Conexao conn = new Conexao();
     public void add(Task task) throws SQLException {
         
-        String sql = "INSERT INTO tasks(nome, descricao) VALUES (?, ?)";
+        String sql = "INSERT INTO tasks(nome, descricao, dataInicio) VALUES (?, ?, ?)";
         
         PreparedStatement ps = conn.getConexao().prepareStatement(sql);
         
         ps.setString(1, task.getNome());
         ps.setString(2, task.getDescricao());
-        //ps.setDate(3, (Date) task.getDataInicio());
+        ps.setString(3, task.getDataInicio());
         
         ps.execute();
     }
@@ -43,6 +43,7 @@ public class TaskDAO {
             task.setId(rs.getInt("id"));
             task.setNome(rs.getString("nome"));
             task.setDescricao(rs.getString("descricao"));
+            task.setDataInicio(rs.getString("dataInicio"));
             task.setStatus(rs.getString("status"));
             
             allTasks.add(task);
@@ -62,17 +63,21 @@ public class TaskDAO {
         while (rs.next()) {  
             task.setId(rs.getInt("id"));
             task.setNome(rs.getString("nome"));
+            task.setDataInicio(rs.getString("dataInicio"));
             task.setDescricao(rs.getString("descricao"));
         }
         return task;
     }
     public void update(Task task) throws SQLException {
         String sql = "UPDATE tasks " +
-                    "SET nome = ?, descricao = ?, ";
+                    "SET nome = ?,  ";
         if (task.getStatus() != null) {
+            sql += "descricao = ?,";
             sql += "status = ? ";
+        }else {
+            sql += "descricao = ?";
         }
-        sql += "WHERE id = ?";
+        sql += " WHERE id = ?";
                     
                 
          PreparedStatement ps = conn.getConexao().prepareStatement(sql);
@@ -80,8 +85,15 @@ public class TaskDAO {
         
         ps.setString(1, task.getNome());
         ps.setString(2, task.getDescricao());
-        ps.setString(3, task.getStatus());
-        ps.setInt(4, task.getId());
+        if (task.getStatus() != null) {
+            ps.setString(3, task.getStatus());
+            ps.setInt(4, task.getId());
+        }else {
+            ps.setInt(3, task.getId());
+        }
+            
+        
+        
         
         ps.execute();
     }

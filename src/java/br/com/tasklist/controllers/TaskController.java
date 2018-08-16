@@ -8,6 +8,11 @@ package br.com.tasklist.controllers;
 import br.com.tasklist.dao.TaskDAO;
 import br.com.tasklist.model.Task;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,7 +41,10 @@ public class TaskController {
     
     public void saveForm(Task task) {
         TaskDAO dao = new TaskDAO();
-        
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	LocalDate localDate = LocalDate.now();
+        String now = dtf.format(localDate);
+        task.setDataInicio(now);
         try {
             dao.add(task);
         } catch (SQLException ex) {
