@@ -8,16 +8,18 @@ package br.com.tasklist.dao;
 import br.com.tasklist.model.Task;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author matheus
  */
 public class TaskDAO {
-    public void adiciona(Task task) throws SQLException {
-        
-        Conexao conn = new Conexao();
+    private Conexao conn = new Conexao();
+    public void add(Task task) throws SQLException {
         
         String sql = "INSERT INTO tasks(nome, descricao) VALUES (?, ?)";
         
@@ -28,6 +30,26 @@ public class TaskDAO {
         //ps.setDate(3, (Date) task.getDataInicio());
         
         ps.execute();
+    }
+    
+    public List<Task> listAll() throws SQLException {
+        List<Task> allTasks = new ArrayList<>();
+        String sql = "SELECT * FROM tasks";
+        
+        PreparedStatement ps = conn.getConexao().prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {            
+            Task task = new Task();
+            
+            task.setId(rs.getInt("id"));
+            task.setNome(rs.getString("nome"));
+            task.setDescricao(rs.getString("descricao"));
+            
+            allTasks.add(task);
+            
+        }
+        
+        return allTasks;
     }
         
 }

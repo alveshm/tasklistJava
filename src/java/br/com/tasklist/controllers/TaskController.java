@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.portlet.ModelAndView;
 
 /**
@@ -21,16 +22,24 @@ import org.springframework.web.portlet.ModelAndView;
 public class TaskController {
     
     @RequestMapping("index")
-    public ModelAndView carregaIndex(Model model, Task task) {
+    public ModelAndView saveForm(Model model, Task task) {
         
         TaskDAO dao = new TaskDAO();
         
         try {
-            dao.adiciona(task);
+            dao.add(task);
         } catch (SQLException ex) {
             System.out.println(ex);
         }
-        model.addAttribute("teste", task.getNome());
+        try {
+            if (dao.listAll() != null) {
+                model.addAttribute("tasks", dao.listAll());
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
         return new ModelAndView("index");
     }
+    
+    
 }

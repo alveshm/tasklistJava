@@ -1,3 +1,4 @@
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -16,7 +17,7 @@
     <body>
         <div class="container">
             <h2>TaskList</h2>
-            <form name="task" method="POST">
+            <form name="task" method="POST" action="">
                 <div class="form-group">
                     <label for="nome">Nome</label>
                     <input type="text" class="form-control" name="nome" placeholder="Digite o nome da Task">
@@ -38,29 +39,19 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Matheus</td>
-                    <td>testetestetestetestetestetestetestetestetestetestetestetestetestetestetestetestetestetestetesteteste</td>
-                    <td>21-02-2008</td>
-                    <td>
-                        <button type="button" class="btn btn-success">Concluir</button>
-                        <button type="button" class="btn btn-primary">Editar</button>
-                        <button type="button" class="btn btn-danger">Remover</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
+                    <c:forEach items="${tasks}" var="tarefa">
+                        <tr>
+                            <th scope="row">${tarefa.id}</th>
+                            <td>${tarefa.nome}</td>
+                            <td>${tarefa.descricao}</td>
+                            <td>21-02-2008</td>
+                            <td>
+                                <button type="button" class="btn btn-success">Concluir</button>
+                                <button type="button" class="btn btn-primary">Editar</button>
+                                <button type="button" class="btn btn-danger">Remover</button>
+                            </td>
+                        </tr>
+                    </c:forEach>
                 </tbody>
             </table>
         </div>
