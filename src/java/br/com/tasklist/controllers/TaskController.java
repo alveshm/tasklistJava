@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.portlet.ModelAndView;
 
 /**
@@ -23,8 +24,17 @@ import org.springframework.web.portlet.ModelAndView;
 public class TaskController {
     
     @RequestMapping("index")
-    public ModelAndView saveForm(Model model, Task task) {
+    public ModelAndView index(Model model, Task task) {
         
+        if (task.getNome() != null) {
+            saveForm(task);   
+        }
+        tasksList(model);
+        
+        return new ModelAndView("index");
+    }
+    
+    public void saveForm(Task task) {
         TaskDAO dao = new TaskDAO();
         
         try {
@@ -32,6 +42,10 @@ public class TaskController {
         } catch (SQLException ex) {
             System.out.println(ex);
         }
+    }
+    
+    public void tasksList(Model model) {
+        TaskDAO dao = new TaskDAO();
         try {
             if (dao.listAll() != null) {
                 model.addAttribute("tasks", dao.listAll());
@@ -39,9 +53,8 @@ public class TaskController {
         } catch (SQLException ex) {
             System.out.println(ex);
         }
-        return new ModelAndView("index");
     }
-    
+        
     @RequestMapping(value = "remove/{id}", method = RequestMethod.GET)
     public String removeTask(@PathVariable("id") int id, Model model) {
         TaskDAO dao = new TaskDAO();
@@ -53,5 +66,46 @@ public class TaskController {
         return "redirect:/index";
     }
     
+    @RequestMapping(value = "editar")
+    public void editTask(@RequestParam("id") int id, Model model, Task task) {
+        TaskDAO dao = new TaskDAO();
+        
+        try {
+            model.addAttribute("id", id);
+            model.addAttribute("nome", dao.findById(id).getNome());
+            model.addAttribute("descricao", dao.findById(id).getDescricao());
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
     
+    @RequestMapping(value = "editTask")
+    public String saveEditTask(@RequestParam("id") int id, Model model, Task task) {
+        TaskDAO dao = new TaskDAO();
+        
+        try {
+            task.setId(id);
+            dao.update(task);
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        
+        return "redirect:/index";
+    }
+    
+    @RequestMapping(value = "updateStatus/{id}", method = RequestMethod.GET)
+    public String saveEditTask(@PathVariable("id") int id, Model model) {
+        TaskDAO dao = new TaskDAO();
+        
+        try {
+            Task task;
+            task = dao.findById(id);
+            task.setStatus("concluido");
+            dao.update(task);
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        
+        return "redirect:/index";
+    }
 }

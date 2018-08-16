@@ -35,6 +35,7 @@
                     <th scope="col">Nome</th>
                     <th scope="col">Descrição</th>
                     <th scope="col">Data de criação</th>
+                    <th scope="col">Status</th>
                     <th scope="col">Ações</th>
                   </tr>
                 </thead>
@@ -46,8 +47,16 @@
                             <td>${tarefa.descricao}</td>
                             <td>21-02-2008</td>
                             <td>
-                                <a href="remove/${tarefa.id}" class="btn btn-success">Concluir</a>
-                                <button type="button" class="btn btn-primary">Editar</button>
+                                <c:choose> 
+                                  <c:when test="${tarefa.status == 'concluido'}">
+                                      <button type="button" disabled class="btn btn-secondary">Concluído</button>
+                                  </c:when>
+                                  <c:otherwise>
+                                    <a href="updateStatus/${tarefa.id}" class="btn btn-success">Concluir</a></td>
+                                  </c:otherwise>
+                                </c:choose>
+                            <td>
+                                <a href="editar?id=${tarefa.id}" class="btn btn-primary">Editar</a>
                                 <a href="remove/${tarefa.id}" class="btn btn-danger">Remover</a>
                             </td>
                         </tr>

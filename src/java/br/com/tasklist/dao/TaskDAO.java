@@ -43,6 +43,7 @@ public class TaskDAO {
             task.setId(rs.getInt("id"));
             task.setNome(rs.getString("nome"));
             task.setDescricao(rs.getString("descricao"));
+            task.setStatus(rs.getString("status"));
             
             allTasks.add(task);
             
@@ -50,7 +51,40 @@ public class TaskDAO {
         
         return allTasks;
     }
-    
+    public Task findById(int id) throws SQLException {
+        Task task = new Task();
+        String sql = "SELECT * FROM tasks WHERE id = ?";
+        
+        PreparedStatement ps = conn.getConexao().prepareStatement(sql);
+        
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {  
+            task.setId(rs.getInt("id"));
+            task.setNome(rs.getString("nome"));
+            task.setDescricao(rs.getString("descricao"));
+        }
+        return task;
+    }
+    public void update(Task task) throws SQLException {
+        String sql = "UPDATE tasks " +
+                    "SET nome = ?, descricao = ?, ";
+        if (task.getStatus() != null) {
+            sql += "status = ? ";
+        }
+        sql += "WHERE id = ?";
+                    
+                
+         PreparedStatement ps = conn.getConexao().prepareStatement(sql);
+         
+        
+        ps.setString(1, task.getNome());
+        ps.setString(2, task.getDescricao());
+        ps.setString(3, task.getStatus());
+        ps.setInt(4, task.getId());
+        
+        ps.execute();
+    }
     public void remove(int id) throws SQLException {
         
         String sql = "DELETE FROM tasks WHERE id = ?";
