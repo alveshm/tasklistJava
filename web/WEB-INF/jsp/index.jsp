@@ -46,9 +46,9 @@
                             <td>${tarefa.descricao}</td>
                             <td>21-02-2008</td>
                             <td>
-                                <button type="button" class="btn btn-success">Concluir</button>
+                                <a href="remove/${tarefa.id}" class="btn btn-success">Concluir</a>
                                 <button type="button" class="btn btn-primary">Editar</button>
-                                <button type="button" class="btn btn-danger">Remover</button>
+                                <a href="remove/${tarefa.id}" class="btn btn-danger">Remover</a>
                             </td>
                         </tr>
                     </c:forEach>

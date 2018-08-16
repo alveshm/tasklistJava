@@ -6,7 +6,6 @@
 package br.com.tasklist.dao;
 
 import br.com.tasklist.model.Task;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -50,6 +49,16 @@ public class TaskDAO {
         }
         
         return allTasks;
+    }
+    
+    public void remove(int id) throws SQLException {
+        
+        String sql = "DELETE FROM tasks WHERE id = ?";
+        
+        PreparedStatement ps = conn.getConexao().prepareStatement(sql);        
+        
+        ps.setInt(1, id);
+        ps.execute();
     }
         
 }

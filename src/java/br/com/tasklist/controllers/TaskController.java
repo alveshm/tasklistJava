@@ -10,6 +10,7 @@ import br.com.tasklist.model.Task;
 import java.sql.SQLException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.portlet.ModelAndView;
@@ -39,6 +40,17 @@ public class TaskController {
             System.out.println(ex);
         }
         return new ModelAndView("index");
+    }
+    
+    @RequestMapping(value = "remove/{id}", method = RequestMethod.GET)
+    public String removeTask(@PathVariable("id") int id, Model model) {
+        TaskDAO dao = new TaskDAO();
+        try {
+            dao.remove(id);
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return "redirect:/index";
     }
     
     
