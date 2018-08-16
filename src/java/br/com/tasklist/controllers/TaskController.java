@@ -82,6 +82,7 @@ public class TaskController {
             model.addAttribute("id", id);
             model.addAttribute("nome", dao.findById(id).getNome());
             model.addAttribute("descricao", dao.findById(id).getDescricao());
+            model.addAttribute("dataFim", dao.findById(id).getDataFim());
         } catch (SQLException ex) {
             System.out.println(ex);
         }
@@ -104,11 +105,14 @@ public class TaskController {
     @RequestMapping(value = "updateStatus/{id}", method = RequestMethod.GET)
     public String saveEditTask(@PathVariable("id") int id, Model model) {
         TaskDAO dao = new TaskDAO();
-        
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	LocalDate localDate = LocalDate.now();
+        String now = dtf.format(localDate);
         try {
             Task task;
             task = dao.findById(id);
             task.setStatus("concluido");
+            task.setDataFim(now);
             dao.update(task);
         } catch (SQLException ex) {
             System.out.println(ex);

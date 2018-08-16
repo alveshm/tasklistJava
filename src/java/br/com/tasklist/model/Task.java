@@ -17,6 +17,15 @@ public class Task {
     private String descricao;
     private String dataInicio;
     private String status;
+    private String dataFim;
+
+    public String getDataFim() {
+        return dataFim;
+    }
+
+    public void setDataFim(String dataFim) {
+        this.dataFim = dataFim;
+    }
 
     public String getStatus() {
         return status;

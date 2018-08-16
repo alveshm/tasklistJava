@@ -50,6 +50,7 @@
                             <th scope="col">Nome</th>
                             <th scope="col">Descrição</th>
                             <th scope="col">Data de criação</th>
+                            <th scope="col">Data de termino</th>
                             <th scope="col">Status</th>
                             <th scope="col">Ações</th>
                           </tr>
@@ -61,6 +62,7 @@
                                     <td>${tarefa.nome}</td>
                                     <td>${tarefa.descricao}</td>
                                     <td>${tarefa.dataInicio}</td>
+                                    <td>${tarefa.dataFim}</td>
                                     <td>
                                         <c:choose> 
                                           <c:when test="${tarefa.status == 'concluido'}">

@@ -25,6 +25,7 @@
                 <div class="card-body">
                   <form name="task" method="POST" action="editTask?id=<%= request.getAttribute("id") %>">
                         <input type="hidden" name="id" value="<%= request.getAttribute("id") %>">
+                        <input type="hidden" name="dataFim" value="<%= request.getAttribute("dataFim") %>">
                         <div class="form-group">
                             <label for="nome">Nome</label>
                             <input type="text" class="form-control" name="nome" value="<%= request.getAttribute("nome") %>" placeholder="Digite o nome da Task">
