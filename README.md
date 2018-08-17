@@ -20,4 +20,4 @@ CREATE TABLE tasks(
 );
 </pre>
 
-2º passo: Executar o projeto e acessar a rota /index
+2º passo: Executar o projeto e acessar a rota /index.
